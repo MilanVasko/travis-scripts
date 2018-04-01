@@ -3,11 +3,14 @@
 # print all the executed commands and  exit if an error occurs
 set -xe
 
-pkg_dir="$PWD"
-pkg_name="`basename $pkg_dir`"
-pkg_install_dir="$pkg_dir/../_luadist_install"
-luadist_dir="$pkg_dir/../_luadist_bootstrap/_install"
+PKG_DIR="$PWD"
+LUADIST_DIR="$PKG_DIR/../_luadist_bootstrap/_install"
+TRAVIS_SCRIPTS_DIR="$PKG_DIR/../_travis_scripts"
 
-# try to install
-$luadist_dir/bin/lua $luadist_dir/lib/lua/luadist.lua $pkg_install_dir install $pkg_name
+export PKG_NAME="`basename $PKG_DIR`"
+export PKG_INSTALL_DIR="$PKG_DIR/../_luadist_install"
+export LUA_BIN="$LUADIST_DIR/bin/lua"
+export LUADIST_LIB="$LUADIST_DIR/lib/lua/luadist.lua"
+
+$LUA_BIN $TRAVIS_SCRIPTS_DIR/script_action.lua
 

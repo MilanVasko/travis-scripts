@@ -3,32 +3,31 @@
 # print all the executed commands and  exit if an error occurs
 set -xe
 
-pkg_dir="$PWD"
-luadist_bootstrap_dir="$pkg_dir/../_luadist_bootstrap"
-luadist_dir="$luadist_bootstrap_dir/_install"
+PKG_DIR="$PWD"
+LUADIST_BOOTSTRAP_DIR="$PKG_DIR/../_luadist_bootstrap"
+LUADIST_DIR="$LUADIST_BOOTSTRAP_DIR/_install"
+TRAVIS_SCRIPTS_DIR="$PKG_DIR/../_travis_scripts"
 
 # get the bootstrap script
-git clone --depth 1 https://github.com/LuaDist-core/bootstrap $luadist_bootstrap_dir
+git clone --depth 1 https://github.com/LuaDist-core/bootstrap $LUADIST_BOOTSTRAP_DIR
 
 # run it
-cd $luadist_bootstrap_dir
+cd $LUADIST_BOOTSTRAP_DIR
 ./bootstrap
 
-# TODO: remove eventually!
-# workaround for broken sockets
-rm "$luadist_bootstrap_dir/_install/lib/lua/socket" -rf
-cp "$luadist_bootstrap_dir/_bootstrap/lib/lua/socket" "$luadist_bootstrap_dir/_install/lib/lua/socket" -r
+# get the travis scripts
+git clone --depth 1 https://github.com/LuaDist-core/travis-scripts $TRAVIS_SCRIPTS_DIR
 
 # TODO: remove eventually!
 # workaround for downloading the latest LuaDist2 instead of the versioned one
-luadist2_workaround_dir="$PWD/_luadist2_workaround"
-git clone --depth 1 https://github.com/LuaDist-core/luadist2 $luadist2_workaround_dir
-cd $luadist2_workaround_dir
+LUADIST2_WORKAROUND_DIR="$PWD/_luadist2_workaround"
+git clone --depth 1 https://github.com/LuaDist-core/luadist2 $LUADIST2_WORKAROUND_DIR
+cd $LUADIST2_WORKAROUND_DIR
 # simulate CMake
 sed -e 's/@luadist2_VERSION@/0\.8\.2/' -e 's/@PLATFORM@/{"unix"}/' ./dist/config.in.lua > ./dist/config.lua
 cd -
-rm "$luadist_dir/lib/lua/dist" "$luadist_dir/lib/lua/luadist.lua" -rf
-cp "$luadist2_workaround_dir/dist" "$luadist_dir/lib/lua/" -r
-cp "$luadist2_workaround_dir/luadist.lua" "$luadist_dir/lib/lua/luadist.lua"
-rm $luadist2_workaround_dir -rf
+rm "$LUADIST_DIR/lib/lua/dist" "$LUADIST_DIR/lib/lua/luadist.lua" -rf
+cp "$LUADIST2_WORKAROUND_DIR/dist" "$LUADIST_DIR/lib/lua/" -r
+cp "$LUADIST2_WORKAROUND_DIR/luadist.lua" "$LUADIST_DIR/lib/lua/luadist.lua"
+rm $LUADIST2_WORKAROUND_DIR -rf
 
