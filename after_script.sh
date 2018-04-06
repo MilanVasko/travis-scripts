@@ -28,5 +28,12 @@ cd "$CLONED_REPO"
 git add --all
 git commit -m "${PKG_NAME} Linux reports"
 git remote add origin_key https://${GITHUB_ACCESS_TOKEN}@$REPORT_REPO
-git push origin_key master
+
+until git push origin_key master
+do
+	git reset HEAD^
+	git pull origin_key master
+	git add --all
+	git commit -m "${PKG_NAME} Linux reports"
+done
 
