@@ -14,7 +14,7 @@ export PKG_INSTALL_DIR="$PKG_DIR/../_luadist_install"
 export LUA_BIN="$LUADIST_DIR/bin/lua"
 export LUADIST_LIB="$LUADIST_DIR/lib/lua/luadist.lua"
 
-REPORT_REPO="github.com/MilanVasko/LuaDist2-Packages"
+REPORT_REPO="github.com/LuaDist-core/report-web"
 export CLONED_REPO="$PKG_DIR/../_luadist_packages_web"
 
 git config --global user.email "travis@travis-ci.org"
