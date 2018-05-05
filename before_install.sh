@@ -16,7 +16,7 @@ cd $LUADIST_BOOTSTRAP_DIR
 ./bootstrap
 
 # get the travis scripts
-git clone --depth 1 https://github.com/LuaDist-core/travis-scripts $TRAVIS_SCRIPTS_DIR
+git clone --depth 1 https://github.com/MilanVasko/travis-scripts $TRAVIS_SCRIPTS_DIR
 
 # TODO: remove eventually!
 # workaround for downloading the latest LuaDist2 instead of the versioned one
